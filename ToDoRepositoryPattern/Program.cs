@@ -37,6 +37,9 @@ Log.Logger = new LoggerConfiguration()
 //To replace the inbuilt logger with Serilog
 builder.Host.UseSerilog();
 
+//IMemoryCache
+builder.Services.AddMemoryCache();
+
 //Repositories Registration
 builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
 
