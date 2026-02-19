@@ -11,6 +11,7 @@ public class AppDbContext : DbContext
 	}
 
 	public DbSet<ToDo> tbl_ToDo { get; set; }
+	public DbSet<User> tbl_User { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,10 +24,43 @@ public class AppDbContext : DbContext
             opt.Property(t => t.Description)
             .HasMaxLength(200)
             .IsRequired();
-
-            //opt.Property(t => t.IsCompleted)
-            //.HasDefaultValue(false);
         });
+
+        modelBuilder.Entity<User>(u =>
+        {
+            u.Property(u => u.Name)
+            .HasMaxLength(50)
+            .IsRequired();
+
+            u.Property(u => u.Email)
+            .HasMaxLength(100)
+            .IsRequired();
+
+            u.HasIndex(u => u.Email)
+            .IsUnique();
+
+            u.Property(u => u.Password)
+            .HasMaxLength(70)
+            .IsRequired();
+
+            u.Property(u => u.Role) 
+            .HasMaxLength(20)
+            .HasDefaultValue("User")
+            .IsRequired();
+
+            u.Property(u => u.RefreshToken)
+            .HasMaxLength(200)
+            .IsRequired(false);
+
+
+            u.Property(u => u.RefreshTokenExpiresAt)
+            .IsRequired(false);
+
+            u.Property(u => u.CreatedAt)
+            .HasDefaultValueSql("GETUTCDATE()");
+
+        });
+        
 
         base.OnModelCreating(modelBuilder);
     }
