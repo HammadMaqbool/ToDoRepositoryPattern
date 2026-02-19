@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using ToDoRepositoryPattern.Caches;
 using ToDoRepositoryPattern.Data;
 using ToDoRepositoryPattern.DTOs;
