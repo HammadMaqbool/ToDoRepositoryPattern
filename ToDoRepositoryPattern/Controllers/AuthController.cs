@@ -32,6 +32,7 @@ public class AuthController : ControllerBase
         return Ok(await _authRepository.LoginUser(userLoginDTO));
     }
 
+    [HttpPost("refresh-token")]
     public async Task<IActionResult> RefreshToken([FromBody] string RefreshTokenRequest)
     {
         var response = await _authRepository.RefreshTokenRequest(RefreshTokenRequest);

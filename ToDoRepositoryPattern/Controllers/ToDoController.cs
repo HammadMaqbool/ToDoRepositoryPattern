@@ -10,7 +10,7 @@ namespace ToDoRepositoryPattern.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    [Authorize]
+    [Authorize(Roles ="User")]
     public class ToDoController : Controller
     {
         private readonly IToDoRepository _toDoRepository;

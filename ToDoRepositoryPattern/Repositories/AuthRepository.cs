@@ -55,6 +55,10 @@ public class AuthRepository
 			_logger.LogInformation("User logged in successfully & Token Generated: {Email}", user.Email);
 			Token = _jwtService.GenerateToken(user);
 			RefreshToken = JWTService.GenerateRefreshToken();
+			user.RefreshToken = RefreshToken;
+			user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7); // Set refresh token expiry to 7 days
+
+			await _context.SaveChangesAsync();
         }
 		return new AuthResponseDTO
 		{
@@ -84,7 +88,7 @@ public class AuthRepository
 		user.RefreshToken = NewRefreshToken;
 		user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7); // Set new refresh token expiry to 7 days
 
-		 _context.tbl_User.Add(user);
+		 //_context.tbl_User.Add(user);
 		await _context.SaveChangesAsync();
 
 		return new AuthResponseDTO
