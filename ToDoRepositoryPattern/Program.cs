@@ -8,8 +8,26 @@ using ToDoRepositoryPattern.Repositories.Interfaces;
 using Serilog;
 using ToDoRepositoryPattern.Middlewares;
 using ToDoRepositoryPattern.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWTSettings:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWTSettings:Audience"],
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings:SecretKey"]!))
+        };
+    });
 
 // Add services to the container.
 builder.Services.AddControllers( options=> { 
@@ -24,6 +42,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<ToDoMaps>();
+    cfg.AddProfile<UserMaps>();
     //Keep adding the Maps for all the classes here. . .. 
 });
 
@@ -42,6 +61,7 @@ builder.Services.AddMemoryCache();
 
 //Repositories Registration
 builder.Services.AddScoped<IToDoRepository, ToDoRepository>();
+builder.Services.AddScoped<AuthRepository>();
 
 var ConnectionString = builder.Configuration.GetConnectionString("conString");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));

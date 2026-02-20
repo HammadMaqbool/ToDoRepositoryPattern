@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToDoRepositoryPattern.DTOs;
 using ToDoRepositoryPattern.Models;
@@ -9,6 +10,7 @@ namespace ToDoRepositoryPattern.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+    [Authorize]
     public class ToDoController : Controller
     {
         private readonly IToDoRepository _toDoRepository;

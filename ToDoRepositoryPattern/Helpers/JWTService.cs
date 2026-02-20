@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using ToDoRepositoryPattern.Models;
 
@@ -15,11 +16,11 @@ public class JWTService
     }
     public string GenerateToken(User user)
     {
-        string ISSUER = _configuration.GetValue<string>("JWTSettings:ToDoAppIssuer")!;
-        string AUDIENCE = _configuration.GetValue<string>("JWTSettings:ToDoAppAudience")!;
+        string ISSUER = _configuration.GetValue<string>("JWTSettings:Issuer")!;
+        string AUDIENCE = _configuration.GetValue<string>("JWTSettings:Audience")!;
         string SECRET_KEY = _configuration.GetValue<string>("JWTSettings:SecretKey")!;
 
-        DateTime EXPIRY = DateTime.UtcNow.AddDays(_configuration.GetValue<int>("JWTSettings:ExpirationMinutes"));
+        DateTime EXPIRY = DateTime.UtcNow.AddMinutes(_configuration.GetValue<int>("JWTSettings:ExpirationMinutes"));
 
         byte[] EncodedBytes = Encoding.UTF8.GetBytes(SECRET_KEY);
 
@@ -45,5 +46,15 @@ public class JWTService
 
         string FinalToken = new JwtSecurityTokenHandler().WriteToken(Token);
         return FinalToken;
+    }
+
+    public static string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using (var rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);
+        }
     }
 }

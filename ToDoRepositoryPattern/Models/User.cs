@@ -11,5 +11,5 @@ public class User
     //Refresh token concepts
     public string RefreshToken { get; set; }
     public DateTime? RefreshTokenExpiresAt { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }  //Getting value from the Fluent API in AppDbContext
 }
