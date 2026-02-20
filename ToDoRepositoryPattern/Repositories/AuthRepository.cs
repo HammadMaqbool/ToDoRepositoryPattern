@@ -49,7 +49,13 @@ public class AuthRepository
 	{
 		string Token = string.Empty;
 		string RefreshToken = string.Empty;
-        var user = _context.tbl_User.FirstOrDefault(u => u.Email == userLogin.Email && u.Password == userLogin.Password);
+        var user = _context.tbl_User.FirstOrDefault(u => u.Email == userLogin.Email);
+		if(user is null || BCrypt.Net.BCrypt.Verify(userLogin.Password, user.Password) == false)
+		{
+			_logger.LogWarning("Failed login attempt for email: {Email}", userLogin.Email);
+			throw new Exception("Invalid email or password");
+		}
+
 		if(user != null)
 		{
 			_logger.LogInformation("User logged in successfully & Token Generated: {Email}", user.Email);
@@ -98,7 +104,4 @@ public class AuthRepository
 		};
 
     }
-
-
-    
 }
