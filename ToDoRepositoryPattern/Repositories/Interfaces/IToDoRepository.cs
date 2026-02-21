@@ -10,4 +10,6 @@ public interface IToDoRepository
     Task<IEnumerable<ToDoResponseDTO>> GetAllToDos();
     Task<ToDo?> GetToDoById(int Id);
     Task<ToDoResponseDTO> UpdateToDo(int Id, ToDoUpdateDTO toDo);
+    Task<PageResponseDTO<IEnumerable<ToDo>>> GetAllToDos(PaginationDTO pagination); // V2
+
 }

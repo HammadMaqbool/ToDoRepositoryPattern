@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="ToDoRepositoryPattern.Unit/ToDoRepositoryPattern.Unit.csproj" Id="ed931912-92f4-4f60-8965-d2578003aedf" />
   <Project Path="ToDoRepositoryPattern/ToDoRepositoryPattern.csproj" />
 </Solution>

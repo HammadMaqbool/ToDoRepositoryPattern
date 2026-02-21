@@ -125,4 +125,24 @@ public class ToDoRepository : IToDoRepository
 
         return _mapper.Map<ToDoResponseDTO>(recordToUpdate);
     }
+
+    public async Task<PageResponseDTO<IEnumerable<ToDo>>> GetAllToDos(PaginationDTO pagination)
+    {
+       var totalCount = await _context.tbl_ToDo.CountAsync();
+       var totalPages = (int)Math.Ceiling(totalCount / (double)pagination.PageSize);
+
+       var toDos = await _context.tbl_ToDo
+        .Skip((pagination.PageNumber - 1) * pagination.PageSize)
+        .Take(pagination.PageSize)
+        .ToListAsync();
+
+        return new PageResponseDTO<IEnumerable<ToDo>>
+        {
+            CurrentPage = pagination.PageNumber,
+            TotalPages = totalPages,
+            PageSize = pagination.PageSize,
+            TotalCount = totalCount,
+            Data = toDos
+        };
+    }
 }
