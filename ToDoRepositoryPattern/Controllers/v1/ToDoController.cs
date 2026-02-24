@@ -12,7 +12,7 @@ namespace ToDoRepositoryPattern.Controllers.v1;
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-[Authorize(Roles ="User")]
+//[Authorize(Roles ="User")]
 public class ToDoController : Controller
 {
     private readonly IToDoRepository _toDoRepository;
@@ -44,7 +44,7 @@ public class ToDoController : Controller
     public async Task<IActionResult> CreateToDo([FromBody] ToDoCreateDTO toDoCreateDTO)
     {
         var validationStatus = _validateCreator.Validate(toDoCreateDTO);
-        if (validationStatus != null)
+        if (validationStatus.IsValid == false)
         {
             _logger.LogError("ToDo creation failed validation. Errors: {ValidationErrors}", validationStatus.Errors);
 
