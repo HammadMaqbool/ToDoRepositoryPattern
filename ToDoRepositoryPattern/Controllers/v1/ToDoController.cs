@@ -13,7 +13,7 @@ namespace ToDoRepositoryPattern.Controllers.v1;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 //[Authorize(Roles ="User")]
-public class ToDoController : Controller
+public class ToDoController : ControllerBase
 {
     private readonly IToDoRepository _toDoRepository;
     private readonly IMapper _mapper;

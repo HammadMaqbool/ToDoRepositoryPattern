@@ -69,7 +69,7 @@ public class ToDoControllerTest
         var ToDo = new ToDo { Title = CreateToDoDTO.Title, Description = CreateToDoDTO.Description };
 
         var ToDoResponseDTO = new ToDoResponseDTO { Title = CreateToDoDTO.Title, Description = CreateToDoDTO.Description };
-        _validateCreator.Setup(v => v.Validate(CreateToDoDTO)).Returns(new FluentValidation.Results.ValidationResult());
+        _validateCreator.Setup(v => v.ValidateAsync(CreateToDoDTO)).ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
         var MappedData = _mapper.Setup(m => m.Map<ToDo>(CreateToDoDTO)).Returns(ToDo);
         _toDoRepository.Setup(repo => repo.CreateToDo(ToDo)).ReturnsAsync(ToDoResponseDTO);
