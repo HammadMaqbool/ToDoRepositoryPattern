@@ -3,8 +3,6 @@ using ToDoRepositoryPattern.Models;
 
 namespace ToDoRepositoryPattern.Data;
 
-
-//This file control the main Db related opperations.
 public class AppDbContext : DbContext
 {
 	public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
