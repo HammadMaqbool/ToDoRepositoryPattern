@@ -8,4 +8,6 @@ public static class CacheKey
 
     public const string AllUsers = "AllUsers"; 
     public static string UserById(int Id) => $"UserById_{Id}"; //method
+
+    //it contain 3 different keys.
 }
