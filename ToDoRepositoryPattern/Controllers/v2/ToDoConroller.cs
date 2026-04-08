@@ -8,7 +8,7 @@ using ToDoRepositoryPattern.Models;
 using ToDoRepositoryPattern.Repositories.Interfaces;
 
 namespace ToDoRepositoryPattern.Controllers.v2;
-//Api Version controll to this line V2
+
 [ApiController]
 [ApiVersion("2.0")]
 [Route("api/v{version:apiVersion}/[controller]")]

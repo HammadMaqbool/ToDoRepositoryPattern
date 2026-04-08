@@ -9,8 +9,6 @@ using ToDoRepositoryPattern.Repositories.Interfaces;
 
 namespace ToDoRepositoryPattern.Controllers.v1;
 
-//Adding API Version controll V1 to this api
-
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
