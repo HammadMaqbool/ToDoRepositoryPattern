@@ -4,8 +4,6 @@ namespace ToDoRepositoryPattern.DTOs.DTOValidations;
 
 public class ToDoCreateDTOValidator : AbstractValidator<ToDoCreateDTO>
 {
-
-	//Just a validator for the DTO.
 	public ToDoCreateDTOValidator()
 	{
 		RuleFor(x => x.Title)
