@@ -1,0 +1,45 @@
+name: CI Build and Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Setup .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # 3. Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # 4. Build project
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      # 5. Run tests (if any exist)
+      - name: Test
+        run: dotnet test --configuration Release --no-build
+        continue-on-error: true
+
+      # 6. Publish project
+      - name: Publish
+        run: dotnet publish -c Release -o publish
+
+      # 7. Upload artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: todo-app
+          path: publish
