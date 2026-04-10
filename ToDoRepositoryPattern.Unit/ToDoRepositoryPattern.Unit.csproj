@@ -23,4 +23,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+
 </Project>
